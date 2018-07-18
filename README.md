@@ -1,11 +1,18 @@
 # How to run diamond_blast_docker image?
 
+# Clone the github repo that contains the sample data
+
+```
+$ https://github.com/upendrak/diamond_blast_docker.git
+$ cd diamond_blast_docker
+```
+
 ## Making the blast database
 
 In order to set up a reference database for DIAMOND, the makedb command needs to be executed with the following command line:
 
 ```
-$ docker run --rm -v `pwd`:/data -w /data upendradevisetty/diamond_blast:0.9.21 makedb --in zebrafish.1.protein.faa -d zebrafish_db
+$ docker run --rm -v `pwd`:/data upendradevisetty/diamondblast makedb --in /data/zebrafish.1.protein.faa -d /data/zebrafish_db
 ```
 
 This will create a binary DIAMOND database file with the specified name (zebrafish_db.dmnd). 
@@ -15,7 +22,7 @@ This will create a binary DIAMOND database file with the specified name (zebrafi
 The alignment task may then be initiated using the blastp command like this:
 
 ```
-$ docker run --rm -v `pwd`:/data -w /data upendradevisetty/diamond_blast:0.9.21 blastp --db zebrafish_db -q mouse.1.protein.faa -o matches.m8
+$ docker run --rm -v `pwd`:/data upendradevisetty/diamondblast blastp --db /data/zebrafish_db -q /data/mouse.1.protein.faa -o /data/matches.m
 ```
 
 The output file here is specified with the –o option and named matches.m8. By default, it is generated in BLAST tabular format.
